@@ -13,7 +13,6 @@ packages:
   - pacman-contrib
   - zram-generator
   - flatpak
-  # --- Core System additions ---
   - grub
   - efibootmgr
   - dmidecode

@@ -1,10 +1,4 @@
-# Main configuration for dcli declarative package management
-# Edit this file to customize your system configuration
-
-# Hostname of this machine
 host: archlinux
-# List of enabled modules
-# Enable modules with: dcli module enable <module-name>
 enabled_modules:
   - niri
   - audio

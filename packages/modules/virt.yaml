@@ -1,7 +1,7 @@
 description: Virtualization Stack (KVM/QEMU/Libvirt)
 packages:
   - virt-manager
-  - qemu-full             # Changed from qemu-desktop to match installed
+  - qemu-full
   - libvirt
   - vde2
   - dnsmasq

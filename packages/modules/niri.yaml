@@ -3,9 +3,8 @@ packages:
   - swaylock
   - swayidle
   - gammastep
-  # Core WM & Login
   - niri-git
-  - sddm                       # Login Manager (was unmanaged before)
+  - sddm
   - xwayland-satellite
   - xdg-desktop-portal-gnome
   - xdg-desktop-portal-gtk
@@ -13,19 +12,16 @@ packages:
   - gnome-keyring
   - swaybg
   
-  # Status Bar & Notifications
   - waybar
   - mako
   - libnotify
   
-  # Input/Output
   - fuzzel
   - foot
   - grim
   - slurp
   - cliphist
   
-  # Theming
   - qt5-wayland
   - qt6-wayland
   - gnome-themes-extra
