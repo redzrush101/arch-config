@@ -29,4 +29,4 @@ packages:
   - glib2
 
 conflicts: []
-post_install_hook: scripts/link-dotfiles.sh
+post_install_hook: scripts/sync-dotfiles.sh

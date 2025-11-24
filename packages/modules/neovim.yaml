@@ -5,4 +5,4 @@ packages:
 
 conflicts: []
 # Ensure dev module is enabled, or add dependencies manually if you disable dev
-post_install_hook: scripts/link-dotfiles.sh
+post_install_hook: []
