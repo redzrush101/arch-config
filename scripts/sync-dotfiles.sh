@@ -21,7 +21,7 @@ DOTFILES_DIR="$REPO_ROOT/dotfiles/niri"  # <-- Now in niri subfolder
 CONFIG_DIR="$REAL_HOME/.config"
 
 # Folders to sync
-FOLDERS=("niri" "waybar" "nvim" "foot")
+FOLDERS=("niri" "waybar" "nvim" "foot" "mako")
 
 # Colors
 RED='\033[0;31m'
