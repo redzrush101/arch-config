@@ -16,8 +16,8 @@ packages:
   - bear
   - ccache
   - mold
-  - zig
-  - zls
+  - zig-master-bin
+  - zls-master-bin
 
   - go-yq
 
