@@ -1,5 +1,9 @@
 description: General user applications
 packages:
+  - mpv
+  - imv
+  - zathura
+  - zathura-pdf-mupdf
   # Communication
   - flatpak:com.discordapp.Discord
   - flatpak:org.localsend.localsend_app

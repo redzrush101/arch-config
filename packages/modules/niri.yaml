@@ -1,5 +1,8 @@
 description: Niri Window Manager and GUI utilities
 packages:
+  - swaylock
+  - swayidle
+  - gammastep
   # Core WM & Login
   - niri-git
   - sddm                       # Login Manager (was unmanaged before)

@@ -1,5 +1,7 @@
 description: AMD Hardware drivers and Gigabyte Motherboard fixes
 packages:
+  - tlp
+  - blueman
   - amd-ucode
   - vulkan-radeon
   - libva-utils
