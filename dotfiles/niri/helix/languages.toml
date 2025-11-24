@@ -1,0 +1,83 @@
+# -----------------------------------------------------------------------------
+# Language Server Config (Clangd)
+# -----------------------------------------------------------------------------
+[language-server.clangd]
+command = "clangd"
+args = [
+  "--background-index",
+  "--clang-tidy",
+  "--header-insertion=iwyu",
+  "--completion-style=detailed",
+  "--function-arg-placeholders",
+  "--fallback-style=llvm"
+]
+
+# -----------------------------------------------------------------------------
+# Language Definition: C
+# -----------------------------------------------------------------------------
+[[language]]
+name = "c"
+auto-format = true
+# Ensure Helix uses the clangd config defined above
+language-servers = [ "clangd" ]
+
+# Indentation settings (standard C is often 2 or 4 spaces)
+[language.indent]
+tab-width = 4
+unit = "    " 
+
+# Debugger Configuration (DAP)
+[language.debugger]
+name = "lldb-dap"
+transport = "stdio"
+command = "lldb-dap" 
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+completion = [ { name = "binary", completion = "filename" } ]
+args = { program = "{0}" }
+
+[[language.debugger.templates]]
+name = "attach"
+request = "attach"
+completion = [ "pid" ]
+args = { pid = "{0}" }
+
+# -----------------------------------------------------------------------------
+# Language Server Config (Zig - zls)
+# -----------------------------------------------------------------------------
+[language-server.zls]
+command = "zls"
+
+# -----------------------------------------------------------------------------
+# Language Definition: Zig
+# -----------------------------------------------------------------------------
+[[language]]
+name = "zig"
+auto-format = true
+# Connects to the [language-server.zls] defined above
+language-servers = [ "zls" ]
+
+# Indentation settings (Zig standard is usually 4 spaces)
+[language.indent]
+tab-width = 4
+unit = "    "
+
+# Debugger Configuration (Reuse lldb-dap from your C setup)
+[language.debugger]
+name = "lldb-dap"
+transport = "stdio"
+command = "lldb-dap"
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+completion = [ { name = "binary", completion = "filename" } ]
+args = { program = "{0}" }
+
+[[language.debugger.templates]]
+name = "attach"
+request = "attach"
+completion = [ "pid" ]
+args = { pid = "{0}" }

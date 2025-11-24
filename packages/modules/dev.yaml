@@ -16,6 +16,8 @@ packages:
   - bear
   - ccache
   - mold
+  - zig
+  - zls
 
   - go-yq
 
