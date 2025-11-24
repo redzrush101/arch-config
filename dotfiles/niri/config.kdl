@@ -1,0 +1,225 @@
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+
+input {
+    // SINGLE INPUT BLOCK containing everything
+    
+    keyboard {
+        xkb {
+            // German is first (Default), US is second.
+            // Press Mod+Space to switch.
+            layout "us"
+        }
+        track-layout "window"
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        dwt
+    }
+
+    mouse {
+        // off
+    }
+}
+
+output "eDP-1" {
+    scale 1.3
+}
+
+layout {
+    gaps 5
+    
+    // Split screen behavior (Centers if 1 window, Split if 2+)
+    center-focused-column "on-overflow"
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 4
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+    }
+
+    border {
+        off
+    }
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+    // slowdown 3.0
+}
+
+// --- Autostart Section ---
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "swaybg" "-i" "/home/yassin/Bilder/wal2.png" "-m" "fill"
+spawn-at-startup "bash" "-c" "~/.config/arch-config/scripts/set-dark-mode.sh"
+
+
+// Fix for WezTerm initial size
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+// Chrome Picture-in-Picture (Floating)
+window-rule {
+    match app-id=r#"^com\.google\.Chrome$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Block notifications from showing in screenshares
+window-rule {
+    match app-id="^mako$"
+    block-out-from "screencast"
+}
+
+binds {
+    // --- 60% KEYBOARD OPTIMIZATIONS ---
+
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Mod+Return { spawn "foot"; }
+    Mod+D { spawn "fuzzel"; }
+    Super+Alt+L { spawn "swaylock"; }
+
+    // --- Clipboard Menu ---
+    Mod+C { spawn "sh" "-c" "cliphist list | fuzzel -d | cliphist decode | wl-copy"; }
+
+    // --- Layout Switching ---
+    Mod+Space { switch-layout "next"; }
+
+    // --- Window Actions ---
+    Mod+Q { close-window; }
+
+    // --- Navigation (HJKL) ---
+    Mod+H     { focus-column-left; }
+    Mod+L     { focus-column-right; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+
+    Mod+Ctrl+H     { move-column-left; }
+    Mod+Ctrl+L     { move-column-right; }
+    Mod+Ctrl+J     { move-window-down; }
+    Mod+Ctrl+K     { move-window-up; }
+
+    // --- Navigation (First/Last) ---
+    Mod+G       { focus-column-first; }
+    Mod+Shift+G { focus-column-last; }
+
+    // --- WORKSPACE SWITCHING (NUMBERS) ---
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    // --- MOVE WINDOW TO WORKSPACE (NUMBERS) ---
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    // --- Workspace Navigation (U/I) ---
+    Mod+U              { focus-workspace-down; }
+    Mod+I              { focus-workspace-up; }
+    Mod+Ctrl+U         { move-column-to-workspace-down; }
+    Mod+Ctrl+I         { move-column-to-workspace-up; }
+    Mod+Shift+U        { move-workspace-down; }
+    Mod+Shift+I        { move-workspace-up; }
+
+    // --- Monitor Switching ---
+    Mod+Shift+H     { focus-monitor-left; }
+    Mod+Shift+J     { focus-monitor-down; }
+    Mod+Shift+K     { focus-monitor-up; }
+    Mod+Shift+L     { focus-monitor-right; }
+    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    // --- Screenshots ---
+    Mod+Shift+S { screenshot; }
+    Print { screenshot; }
+
+    // --- Audio Control ---
+    XF86AudioRaiseVolume allow-when-locked=true { 
+        spawn "sh" "-c" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0 && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i audio-volume-high 'Volume Up' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@)\""; 
+    }
+    XF86AudioLowerVolume allow-when-locked=true { 
+        spawn "sh" "-c" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1- && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i audio-volume-low 'Volume Down' \"$(wpctl get-volume @DEFAULT_AUDIO_SINK@)\""; 
+    }
+    XF86AudioMute allow-when-locked=true { 
+        spawn "sh" "-c" "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i audio-volume-muted 'Mute' 'Toggled'"; 
+    }
+
+    // --- Brightness Control ---
+    XF86MonBrightnessUp allow-when-locked=true { 
+        spawn "sh" "-c" "brightnessctl set +10% && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl g)\""; 
+    }
+    XF86MonBrightnessDown allow-when-locked=true { 
+        spawn "sh" "-c" "brightnessctl set 10%- && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl g)\""; 
+    }
+
+    // --- Window Sizing ---
+    Mod+R { switch-preset-column-width; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    
+    // Center Column (Shift+C to avoid conflict with Clipboard)
+    Mod+Shift+C { center-column; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    // Floating/Tabbed
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+W       { toggle-column-tabbed-display; }
+
+    // Quit/Power
+    Mod+Shift+E { quit; }
+    Mod+Shift+P { power-off-monitors; }
+
+    // Mouse Wheel Binds
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    // Window consume/expel
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    // Open/close the Overview: a zoomed-out view of workspaces and windows.
+    // You can also move the mouse into the top-left hot corner,
+    // or do a four-finger swipe up on a touchpad.
+    Mod+O repeat=false { toggle-overview; }
+
+}

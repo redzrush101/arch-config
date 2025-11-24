@@ -1,0 +1,98 @@
+* {
+    border: none;
+    border-radius: 0;
+    /* Strict monospace font for the terminal look */
+    font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #ffffff;
+    border-bottom: 1px solid #444444; /* Subtle bottom border */
+}
+
+/* --- GENERIC MODULE STYLE --- */
+#niri-language,
+#network,
+#cpu,
+#memory,
+#pulseaudio,
+#battery,
+#clock,
+#tray {
+    padding: 0 10px;
+    background-color: #000000;
+    color: #ffffff;
+    /* The "Pipe" Separator */
+    border-right: 1px solid #666666;
+}
+
+/* Remove border from the last item */
+#tray {
+    border-right: none;
+}
+
+/* --- NIRI WORKSPACES --- */
+#workspaces {
+    padding: 0;
+    margin: 0;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    background-color: #000000;
+    color: #888888;
+    border-right: 1px solid #444444;
+}
+
+/* Inactive but visible on output */
+#workspaces button.active {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+/* The currently focused workspace (DWM style: Inverted colors) */
+#workspaces button.focused {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Urgent / Notification */
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+/* --- NIRI WINDOW TITLE --- */
+#window {
+    background-color: #222222; /* Distinct background for title */
+    color: #eeeeee;
+    padding: 0 15px;
+}
+
+/* --- ALERTS --- */
+#battery.warning {
+    color: #ffcc00;
+}
+
+#battery.critical {
+    background-color: #cc241d;
+    color: #ffffff;
+}
+
+#network.disconnected {
+    color: #cc241d;
+}
+
+#pulseaudio.muted {
+    color: #888888;
+    background-color: #222222;
+}

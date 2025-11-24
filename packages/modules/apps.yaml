@@ -1,0 +1,12 @@
+description: General user applications
+packages:
+  # Communication
+  - flatpak:com.discordapp.Discord
+  - flatpak:org.localsend.localsend_app
+
+  # Browsers & Editors
+  - flatpak:com.google.Chrome
+  - flatpak:dev.zed.Zed
+
+  # System Utilities
+  - flatpak:com.github.tchx84.Flatseal

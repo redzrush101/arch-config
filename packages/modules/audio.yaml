@@ -1,0 +1,10 @@
+description: Pipewire Audio Stack
+packages:
+  - pipewire              # Core daemon
+  - wireplumber           # Session manager
+  - pipewire-alsa
+  - pipewire-pulse
+  - pipewire-jack         # Jack compatibility
+  - libpulse              # PulseAudio library
+  - gst-plugin-pipewire
+  - pavucontrol

@@ -1,0 +1,47 @@
+description: Development tools and CLI utilities
+packages:
+  # Core essentials
+  - git
+  - github-cli
+  - curl
+  - unzip
+  - xclip
+  - wl-clipboard
+  - ncdu                     # Disk usage analyzer (was unmanaged before)
+
+  # Build & C/C++ toolchain
+  - base-devel
+  - clang
+  - cmake
+  - gdb
+  - lldb
+  - bear
+  - ccache
+  - mold
+
+  # Go-based CLI tools
+  - go-yq
+
+  # Runtimes (Node/Python often needed for LSPs)
+  - nodejs
+  - npm
+  - python
+  - python-pip
+
+  # Fuzzy finder & search
+  - fzf
+  - ripgrep
+  - fd
+
+  # Utilities
+  - tree
+  - wget
+  - htop
+  - fastfetch
+  - openbsd-netcat
+  - inetutils
+  - lazygit
+  - stylua
+
+  # LLM
+  - opencode

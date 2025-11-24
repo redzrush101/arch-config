@@ -1,0 +1,8 @@
+description: Neovim specific packages
+packages:
+  - neovim
+  - python-pynvim
+
+conflicts: []
+# Ensure dev module is enabled, or add dependencies manually if you disable dev
+post_install_hook: scripts/link-dotfiles.sh

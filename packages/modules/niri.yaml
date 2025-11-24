@@ -1,0 +1,33 @@
+description: Niri Window Manager and GUI utilities
+packages:
+  # Core WM & Login
+  - niri-git
+  - sddm                       # Login Manager (was unmanaged before)
+  - xwayland-satellite
+  - xdg-desktop-portal-gnome
+  - xdg-desktop-portal-gtk
+  - polkit-gnome
+  - gnome-keyring
+  - swaybg
+  
+  # Status Bar & Notifications
+  - waybar
+  - mako
+  - libnotify
+  
+  # Input/Output
+  - fuzzel
+  - foot
+  - grim
+  - slurp
+  - cliphist
+  
+  # Theming
+  - qt5-wayland
+  - qt6-wayland
+  - gnome-themes-extra
+  - gsettings-desktop-schemas
+  - glib2
+
+conflicts: []
+post_install_hook: scripts/link-dotfiles.sh

@@ -1,0 +1,20 @@
+description: Base system packages
+packages:
+  - base
+  - base-devel
+  - linux
+  - linux-firmware
+  - linux-headers
+  - networkmanager
+  - man-db
+  - man-pages
+  - sudo
+  - openssh
+  - pacman-contrib
+  - zram-generator
+  - flatpak
+  # --- Core System additions ---
+  - grub
+  - efibootmgr
+  - dmidecode
+  - paru-bin

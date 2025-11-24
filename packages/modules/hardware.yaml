@@ -1,0 +1,10 @@
+description: AMD Hardware drivers and Gigabyte Motherboard fixes
+packages:
+  - amd-ucode
+  - vulkan-radeon
+  - libva-utils
+  - vdpauinfo
+  - dkms
+  
+conflicts: []
+post_install_hook: scripts/fix-gigabyte-wakeup.sh

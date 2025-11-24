@@ -1,0 +1,20 @@
+description: File Management (Nautilus + Mounting Backends)
+packages:
+  - nautilus
+  - sushi                 # Quick preview (spacebar) for Nautilus
+  - file-roller           # Archive manager integration
+
+  # --- Virtual Filesystem (GVFS) ---
+  # Core mounting capability is pulled in by nautilus -> gvfs -> udisks2
+  # But you need these backends for specific device types:
+  - gvfs-mtp              # Android phones & Media players
+  - gvfs-afc              # Apple devices (iPhones/iPads)
+  - gvfs-gphoto2          # Digital Cameras
+  - gvfs-smb              # Windows/Network Shares (SMB)
+  - gvfs-google           # Google Drive support (optional, remove if unwanted)
+
+  # --- Filesystem Drivers ---
+  # Required to mount common external drive formats
+  - ntfs-3g               # NTFS (Windows drives)
+  - dosfstools            # FAT32 (Generic USB sticks)
+  - exfatprogs            # exFAT (Modern large USB/SD cards)

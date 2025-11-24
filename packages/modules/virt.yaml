@@ -1,0 +1,15 @@
+description: Virtualization Stack (KVM/QEMU/Libvirt)
+packages:
+  - virt-manager
+  - qemu-full             # Changed from qemu-desktop to match installed
+  - libvirt
+  - vde2
+  - dnsmasq
+  - bridge-utils
+  - libguestfs
+  - iptables-nft
+  - edk2-ovmf
+  - swtpm
+  
+conflicts: []
+post_install_hook: scripts/setup-virt.sh

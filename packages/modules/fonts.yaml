@@ -1,0 +1,8 @@
+description: System Fonts
+packages:
+  - noto-fonts
+  - noto-fonts-cjk
+  - noto-fonts-emoji
+  - otf-font-awesome
+  - ttf-jetbrains-mono-nerd
+  - ttf-nerd-fonts-symbols
