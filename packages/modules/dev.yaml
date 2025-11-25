@@ -69,3 +69,6 @@ packages:
 
   # Documentation
   - tldr
+
+  # IDE
+  - helix

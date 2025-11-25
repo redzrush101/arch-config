@@ -19,6 +19,7 @@ packages:
 
   # Portals & Authentication
   - xdg-desktop-portal-gtk
+  - xdg-desktop-portal-gnome
   - polkit-gnome
   - gnome-keyring
 
