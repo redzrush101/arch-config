@@ -1,5 +1,6 @@
-// Niri Configuration
-// https://github.com/YaLTeR/niri/wiki/Configuration
+// =============================================================================
+// Niri Configuration - Catppuccin Mocha Theme
+// =============================================================================
 
 input {
     keyboard {
@@ -25,7 +26,7 @@ output "eDP-1" {
 }
 
 layout {
-    gaps 5
+    gaps 8
     center-focused-column "on-overflow"
     always-center-single-column
 
@@ -37,10 +38,11 @@ layout {
 
     default-column-width { proportion 0.5; }
 
+    // Catppuccin Mocha colors
     focus-ring {
-        width 4
-        active-color "#7fc8ff"
-        inactive-color "#505050"
+        width 3
+        active-color "#cba6f7"   // Mauve
+        inactive-color "#45475a" // Surface 1
     }
 
     border {

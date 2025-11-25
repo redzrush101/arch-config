@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 24,
+    "height": 26,
     "spacing": 0,
     "reload_style_on_change": true,
 
@@ -19,63 +19,98 @@
     ],
 
     "niri/workspaces": {
-        "format": "{value}",
+        "format": "{icon}",
+        "format-icons": {
+            "1": "一",
+            "2": "二",
+            "3": "三",
+            "4": "四",
+            "5": "五",
+            "6": "六",
+            "7": "七",
+            "8": "八",
+            "9": "九",
+            "default": ""
+        },
         "current-only": false
     },
 
     "niri/window": {
         "format": "{title}",
+        "max-length": 60,
         "separate-outputs": true,
         "rewrite": {
-            "(.*) - Mozilla Firefox": "$1",
-            "(.*) - Visual Studio Code": "VSCode",
-            "(.*) - Google Chrome": "$1"
+            "(.*) - Mozilla Firefox": "󰈹 $1",
+            "(.*) - Google Chrome": " $1",
+            "(.*) - Chromium": " $1",
+            "(.*)Neovim": " $1",
+            "(.*) - Visual Studio Code": "󰨞 $1",
+            "(.*) - Zed": "zed $1",
+            "foot": " Terminal",
+            "": " Desktop"
         }
     },
 
     "niri/language": {
-        "format": "KB: {short}",
-        "format-en": "US"
+        "format": "󰌌 {short}"
     },
 
     "network": {
-        "format-wifi": "WIFI: {essid} ({signalStrength}%)",
-        "format-ethernet": "ETH: {ipaddr}",
-        "format-disconnected": "NET: DOWN",
-        "tooltip-format": "{ifname} via {gwaddr}"
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 {ipaddr}",
+        "format-disconnected": "󰤭 Offline",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "on-click": "foot -e nmtui"
     },
 
     "cpu": {
         "interval": 5,
-        "format": "CPU: {usage}%"
+        "format": "󰻠 {usage}%"
     },
 
     "memory": {
         "interval": 10,
-        "format": "MEM: {percentage}%"
+        "format": "󰍛 {percentage}%"
     },
 
     "pulseaudio": {
         "scroll-step": 5,
-        "format": "VOL: {volume}%",
-        "format-bluetooth": "BT: {volume}%",
-        "format-muted": "VOL: MUTE",
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "󰂯 {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
         "on-click": "pavucontrol"
     },
 
     "battery": {
+        "interval": 30,
         "states": {
             "warning": 30,
             "critical": 15
         },
-        "format": "BAT: {capacity}%",
-        "format-charging": "CHG: {capacity}%",
-        "format-plugged": "AC: {capacity}%"
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
 
     "clock": {
-        "format": "{:%Y-%m-%d %H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>"
+        "format": "󰥔 {:%H:%M}",
+        "format-alt": "󰃭 {:%Y-%m-%d}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "right",
+            "format": {
+                "months": "<span color='#f5e0dc'><b>{}</b></span>",
+                "days": "<span color='#cdd6f4'>{}</span>",
+                "weeks": "<span color='#94e2d5'>W{}</span>",
+                "weekdays": "<span color='#f9e2af'>{}</span>",
+                "today": "<span color='#f38ba8'><b><u>{}</u></b></span>"
+            }
+        }
     },
 
     "tray": {

@@ -1,3 +1,7 @@
+# =============================================================================
+# Helix Language Configuration
+# =============================================================================
+
 # -----------------------------------------------------------------------------
 # Clangd (C/C++)
 # -----------------------------------------------------------------------------
@@ -19,10 +23,8 @@ args = [
 name = "c"
 auto-format = true
 language-servers = ["clangd"]
-
-[language.indent]
-tab-width = 4
-unit = "    "
+comment-token = "//"
+indent = { tab-width = 4, unit = "    " }
 
 [language.debugger]
 name = "lldb-dap"
@@ -54,10 +56,8 @@ command = "zls"
 name = "zig"
 auto-format = true
 language-servers = ["zls"]
-
-[language.indent]
-tab-width = 4
-unit = "    "
+comment-token = "//"
+indent = { tab-width = 4, unit = "    " }
 
 [language.debugger]
 name = "lldb-dap"
@@ -75,3 +75,11 @@ name = "attach"
 request = "attach"
 completion = ["pid"]
 args = { pid = "{0}" }
+
+# -----------------------------------------------------------------------------
+# Bash
+# -----------------------------------------------------------------------------
+[[language]]
+name = "bash"
+auto-format = true
+formatter = { command = "shfmt", args = ["-i", "4"] }

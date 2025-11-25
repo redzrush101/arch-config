@@ -49,5 +49,8 @@ packages:
   - gsettings-desktop-schemas
   - glib2
 
+  # Icon theme (for notifications/launcher)
+  - papirus-icon-theme
+
 conflicts: []
 post_install_hook: scripts/sync-dotfiles.sh

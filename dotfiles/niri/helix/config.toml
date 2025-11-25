@@ -1,10 +1,18 @@
-theme = "onedark"
+# =============================================================================
+# Helix Editor - Catppuccin Mocha Theme
+# =============================================================================
+
+theme = "catppuccin_mocha"
 
 [editor]
 line-number = "relative"
 cursorline = true
 color-modes = true
 bufferline = "multiple"
+true-color = true
+rulers = [80, 120]
+idle-timeout = 50
+completion-trigger-len = 1
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,16 +21,72 @@ select = "underline"
 
 [editor.statusline]
 left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-type"]
+center = []
+right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-line-ending", "file-type"]
 separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [editor.lsp]
 display-messages = true
 display-inlay-hints = true
+auto-signature-help = true
+snippets = true
 
 [editor.file-picker]
 hidden = false
+git-ignore = true
+git-global = true
 
 [editor.indent-guides]
 render = true
 character = "│"
+skip-levels = 0
+
+[editor.gutters]
+layout = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+
+[editor.gutters.line-numbers]
+min-width = 3
+
+[editor.soft-wrap]
+enable = false
+max-wrap = 25
+max-indent-retain = 40
+
+[editor.smart-tab]
+enable = true
+supersede-menu = false
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+tab = "→"
+newline = "⏎"
+tabpad = "·"
+
+# =============================================================================
+# Keybindings
+# =============================================================================
+[keys.normal]
+# Quick save
+"C-s" = ":w"
+# Quick quit
+"C-q" = ":q"
+# Buffer navigation
+"C-h" = "jump_view_left"
+"C-l" = "jump_view_right"
+"C-j" = "jump_view_down"
+"C-k" = "jump_view_up"
+# Tab navigation
+"H" = "goto_previous_buffer"
+"L" = "goto_next_buffer"
+
+[keys.insert]
+"C-s" = [":w", "normal_mode"]

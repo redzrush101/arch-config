@@ -1,52 +1,90 @@
-# Mako Notification Daemon Configuration
+# =============================================================================
+# Mako Notification Daemon - Catppuccin Mocha Theme
+# =============================================================================
 
-# Timing
+# --- Timing ---
 default-timeout=5000
 ignore-timeout=1
 
-# Appearance
-font=JetBrains Mono 11
-background-color=#1e1e2eee
+# --- Appearance ---
+font=JetBrains Mono Nerd Font 11
+background-color=#1e1e2ef0
 text-color=#cdd6f4
 border-color=#89b4fa
 border-size=2
-border-radius=8
-padding=15
-margin=10
-width=350
-height=150
+border-radius=12
+padding=16
+margin=12
+width=380
+max-height=200
 
-# Position
+# --- Position ---
 anchor=top-right
-
-# Icons
-icons=1
-max-icon-size=48
-icon-path=/usr/share/icons/Adwaita
-
-# Behavior
-max-visible=5
-sort=-time
 layer=overlay
 
-# Actions
+# --- Icons ---
+icons=1
+max-icon-size=64
+icon-path=/usr/share/icons/Papirus-Dark:/usr/share/icons/Adwaita
+
+# --- Behavior ---
+max-visible=5
+sort=-time
+default-timeout=5000
+
+# --- Actions ---
 on-button-left=dismiss
 on-button-right=dismiss-all
 on-button-middle=invoke-default-action
 
-# Urgency: Low
+# --- Progress Bar (for volume/brightness notifications) ---
+progress-color=over #89b4fa
+
+# =============================================================================
+# Urgency Levels
+# =============================================================================
+
 [urgency=low]
 border-color=#a6adc8
+background-color=#181825f0
+default-timeout=3000
 
-# Urgency: Normal
 [urgency=normal]
 border-color=#89b4fa
+background-color=#1e1e2ef0
 
-# Urgency: Critical
 [urgency=critical]
 border-color=#f38ba8
+background-color=#1e1e2ef0
+text-color=#f38ba8
 default-timeout=0
 
-# App-specific: Spotify
+# =============================================================================
+# App-Specific Styles
+# =============================================================================
+
 [app-name=Spotify]
-border-color=#1db954
+border-color=#a6e3a1
+default-timeout=3000
+
+[app-name=Discord]
+border-color=#89b4fa
+
+[app-name=Firefox]
+border-color=#fab387
+
+[app-name=Google Chrome]
+border-color=#f9e2af
+
+[app-name=notify-send]
+# System notifications (volume, brightness)
+border-color=#cba6f7
+
+[summary~="Volume.*"]
+border-color=#cba6f7
+
+[summary~="Brightness.*"]
+border-color=#f9e2af
+
+[category=email]
+border-color=#89dceb

@@ -2,6 +2,10 @@
 # =============================================================================
 # Common Library - Shared functions for all scripts
 # Source this file: source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
+#
+# NOTE: Scripts should determine their own SCRIPT_DIR and REPO_ROOT BEFORE
+#       sourcing this file, as BASH_SOURCE doesn't work reliably across
+#       function calls.
 # =============================================================================
 
 # Prevent multiple inclusion
@@ -67,29 +71,27 @@ require_user() {
 # =============================================================================
 
 # Ensure a file contains a specific line
-# Usage: ensure_line_in_file "line content" "/path/to/file"
 ensure_line_in_file() {
     local line="$1"
     local file="$2"
     
     if [[ ! -f "$file" ]] || ! grep -qF "$line" "$file"; then
         echo "$line" >> "$file"
-        return 0  # Changed
+        return 0
     fi
-    return 1  # Already exists
+    return 1
 }
 
 # Write content to file only if different
-# Usage: write_file_if_changed "content" "/path/to/file"
 write_file_if_changed() {
     local content="$1"
     local file="$2"
     
     if [[ ! -f "$file" ]] || [[ "$(cat "$file" 2>/dev/null)" != "$content" ]]; then
         echo "$content" > "$file"
-        return 0  # Changed
+        return 0
     fi
-    return 1  # No change
+    return 1
 }
 
 # Create parent directories if needed
@@ -105,7 +107,6 @@ ensure_parent_dir() {
 # =============================================================================
 
 # Enable and optionally start a systemd service
-# Usage: systemd_enable_service "service-name" [--now]
 systemd_enable_service() {
     local service="$1"
     local start_now="${2:-}"
@@ -126,7 +127,6 @@ systemd_enable_service() {
 }
 
 # Create a oneshot systemd service
-# Usage: create_oneshot_service "name" "description" "exec_command" ["after_target"]
 create_oneshot_service() {
     local name="$1"
     local description="$2"
@@ -151,11 +151,10 @@ EOF
 }
 
 # =============================================================================
-# Config File Helpers (for modprobe, etc.)
+# Config File Helpers
 # =============================================================================
 
 # Set a modprobe option
-# Usage: set_modprobe_option "filename" "module" "options"
 set_modprobe_option() {
     local filename="$1"
     local module="$2"
@@ -173,7 +172,6 @@ set_modprobe_option() {
 }
 
 # Blacklist a kernel module
-# Usage: blacklist_module "filename" "module_name"
 blacklist_module() {
     local filename="$1"
     local module="$2"
@@ -194,7 +192,6 @@ blacklist_module() {
 # =============================================================================
 
 # Add kernel parameters to GRUB
-# Usage: add_grub_params "param1 param2 param3"
 add_grub_params() {
     local params="$1"
     local grub_file="/etc/default/grub"
@@ -210,10 +207,7 @@ add_grub_params() {
     done
     
     if $needs_update; then
-        # Backup first
         cp "$grub_file" "${grub_file}.bak"
-        
-        # Add params (handles both empty and non-empty GRUB_CMDLINE_LINUX_DEFAULT)
         sed -i "s/GRUB_CMDLINE_LINUX_DEFAULT=\"/GRUB_CMDLINE_LINUX_DEFAULT=\"$params /" "$grub_file"
         
         log_ok "Added GRUB params: $params"
@@ -224,20 +218,6 @@ add_grub_params() {
         log_skip "GRUB params already configured"
         return 1
     fi
-}
-
-# =============================================================================
-# Path Helpers
-# =============================================================================
-
-# Get the directory where the calling script lives
-get_script_dir() {
-    cd "$(dirname "${BASH_SOURCE[1]}")" && pwd
-}
-
-# Get the repo root (assumes scripts are in scripts/)
-get_repo_root() {
-    dirname "$(get_script_dir)"
 }
 
 # =============================================================================

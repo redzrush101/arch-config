@@ -7,22 +7,25 @@
 
 set -euo pipefail
 
-# Source common library
+# -----------------------------------------------------------------------------
+# Path Detection (MUST be done BEFORE sourcing common.sh)
+# -----------------------------------------------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Source common library
 source "${SCRIPT_DIR}/lib/common.sh"
 
 # -----------------------------------------------------------------------------
 # Configuration
 # -----------------------------------------------------------------------------
 readonly DOTFILES_SUBDIR="dotfiles/niri"
-readonly FOLDERS=("niri" "waybar" "nvim" "foot" "mako" "helix")
-
+readonly FOLDERS=("niri" "waybar" "nvim" "foot" "mako" "helix" "fuzzel" "swaylock")
 # -----------------------------------------------------------------------------
-# Derived Paths
+# Derived Paths (using pre-calculated REPO_ROOT)
 # -----------------------------------------------------------------------------
 REAL_USER=$(get_real_user)
 REAL_HOME=$(get_real_home)
-REPO_ROOT=$(get_repo_root)
 DOTFILES_DIR="${REPO_ROOT}/${DOTFILES_SUBDIR}"
 CONFIG_DIR="${REAL_HOME}/.config"
 
@@ -50,9 +53,9 @@ get_newest_mtime() {
     local path="$1"
     
     if [[ -d "$path" ]]; then
-        find "$path" -type f -printf '%T@\n' 2>/dev/null | sort -rn | head -1
+        find "$path" -type f -printf '%T@\n' 2>/dev/null | sort -rn | head -1 || echo "0"
     elif [[ -f "$path" ]]; then
-        stat -c '%Y' "$path" 2>/dev/null
+        stat -c '%Y' "$path" 2>/dev/null || echo "0"
     else
         echo "0"
     fi
@@ -104,6 +107,10 @@ sync_folder() {
             repo_mtime=$(get_newest_mtime "$repo_path")
             config_mtime=$(get_newest_mtime "$config_path")
             
+            # Handle empty mtime (default to 0)
+            repo_mtime=${repo_mtime:-0}
+            config_mtime=${config_mtime:-0}
+            
             if (( $(echo "$config_mtime > $repo_mtime" | bc -l) )); then
                 echo -e "    ${YELLOW}[SYNC ←]${NC} Config is newer, updating repo"
                 rm -rf "$repo_path"
@@ -136,6 +143,12 @@ print_header() {
 # -----------------------------------------------------------------------------
 main() {
     print_header
+    
+    # Validate paths
+    if [[ ! -d "$REPO_ROOT" ]]; then
+        log_error "Repo root not found: $REPO_ROOT"
+        exit 1
+    fi
     
     # Ensure directories exist
     mkdir -p "$DOTFILES_DIR"

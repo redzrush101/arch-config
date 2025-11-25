@@ -1,19 +1,62 @@
+/* =============================================================================
+ * Waybar - Catppuccin Mocha (refined minimal mix)
+ * ============================================================================= */
+
+/* Catppuccin Mocha Palette */
+@define-color rosewater #f5e0dc;
+@define-color flamingo #f2cdcd;
+@define-color pink #f5c2e7;
+@define-color mauve #cba6f7;
+@define-color red #f38ba8;
+@define-color maroon #eba0ac;
+@define-color peach #fab387;
+@define-color yellow #f9e2af;
+@define-color green #a6e3a1;
+@define-color teal #94e2d5;
+@define-color sky #89dceb;
+@define-color sapphire #74c7ec;
+@define-color blue #89b4fa;
+@define-color lavender #b4befe;
+@define-color text #cdd6f4;
+@define-color subtext1 #bac2de;
+@define-color subtext0 #a6adc8;
+@define-color overlay2 #9399b2;
+@define-color overlay1 #7f849c;
+@define-color overlay0 #6c7086;
+@define-color surface2 #585b70;
+@define-color surface1 #45475a;
+@define-color surface0 #313244;
+@define-color base #1e1e2e;
+@define-color mantle #181825;
+@define-color crust #11111b;
+
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    font-family: "JetBrains Mono Nerd Font", "JetBrains Mono", monospace;
     font-size: 13px;
     font-weight: bold;
     min-height: 0;
 }
 
 window#waybar {
-    background-color: #000000;
-    color: #ffffff;
-    border-bottom: 1px solid #444444;
+    background-color: @crust;
+    color: @text;
+    border-bottom: 1px solid @surface0; /* Thinner 1px border */
 }
 
-/* Generic module style */
+/* --- Layout Containers --- */
+/* Fix for right padding: adds space after the last module */
+.modules-right {
+    padding-right: 10px;
+    background-color: @crust;
+}
+
+.modules-left {
+    background-color: @crust;
+}
+
+/* --- Generic Module Style --- */
 #niri-language,
 #network,
 #cpu,
@@ -22,71 +65,93 @@ window#waybar {
 #battery,
 #clock,
 #tray {
-    padding: 0 10px;
-    background-color: #000000;
-    color: #ffffff;
-    border-right: 1px solid #666666;
+    padding: 0 10px; /* Reduced from 12px to 10px for tighter look */
+    background-color: transparent;
+    border-right: 1px solid @surface0; /* Subtle separator */
 }
 
+/* Specific Colors (Keeping the mix) */
+#network { color: @sapphire; }
+#cpu { color: @sky; }
+#memory { color: @teal; }
+#pulseaudio { color: @mauve; }
+#battery { color: @green; }
+#niri-language { color: @peach; }
+#clock { color: @lavender; }
+
+/* Remove border from the tray so it doesn't look weird at the end */
 #tray {
     border-right: none;
 }
 
-/* Workspaces */
+/* --- Workspaces --- */
 #workspaces {
     padding: 0;
     margin: 0;
 }
 
 #workspaces button {
-    padding: 0 8px;
-    background-color: #000000;
-    color: #888888;
-    border-right: 1px solid #444444;
-}
-
-#workspaces button.active {
-    background-color: #222222;
-    color: #ffffff;
-}
-
-#workspaces button.focused {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
-    color: #ffffff;
+    padding: 0 10px;
+    background-color: transparent; /* Flat like old config */
+    color: @overlay1;
+    border-right: 1px solid @surface0;
+    transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-    background-color: #333333;
-    color: #ffffff;
+    background-color: @surface0;
+    color: @text;
 }
 
-/* Window title */
+#workspaces button.active {
+    background-color: @surface1;
+    color: @text;
+}
+
+#workspaces button.focused {
+    background-color: @mauve;
+    color: @crust;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: @crust;
+}
+
+/* --- Window Title --- */
 #window {
-    background-color: #222222;
-    color: #eeeeee;
+    background-color: @base; /* Very subtle separation from bar, or use @crust for fully flat */
+    color: @text;
     padding: 0 15px;
+    border-right: 1px solid @surface0;
+    border-left: 1px solid @surface0;
 }
 
-/* Alerts */
-#battery.warning {
-    color: #ffcc00;
+/* --- Tooltips --- */
+tooltip {
+    background-color: @base;
+    border: 1px solid @surface0;
 }
 
-#battery.critical {
-    background-color: #cc241d;
-    color: #ffffff;
+tooltip label {
+    color: @text;
 }
 
+/* --- State Alerts --- */
 #network.disconnected {
-    color: #cc241d;
+    color: @red;
 }
 
 #pulseaudio.muted {
-    color: #888888;
-    background-color: #222222;
+    background-color: @surface0;
+    color: @overlay0;
+}
+
+#battery.warning {
+    color: @yellow;
+}
+
+#battery.critical {
+    background-color: @red;
+    color: @crust;
 }
