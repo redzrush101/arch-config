@@ -1,4 +1,4 @@
-description: Basic KDE Plasma install with Pipewire
+description: Basic KDE Plasma install with Pipewire and Flatpak setup
 packages:
   # Base Plasma
   - plasma-desktop
@@ -6,14 +6,14 @@ packages:
   - konsole
   - dolphin
   
-  # Audio / Network integrations
+  # Audio / Network
   - plasma-nm
   - plasma-pa
   
   # Display management
   - kscreen
   
-  # Pipewire (inheriting audio module logic locally or strictly defining here)
+  # Pipewire
   - pipewire
   - wireplumber
   - pipewire-alsa
@@ -22,4 +22,4 @@ packages:
   - libpulse
 
 conflicts: []
-post_install_hook: []
+post_install_hook: scripts/setup-kde.sh

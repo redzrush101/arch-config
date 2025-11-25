@@ -1,4 +1,4 @@
-description: Intel Hardware Acceleration, Undervolt, and WiFi
+description: Intel Hardware Acceleration, Undervolt, and rtw88 WiFi
 packages:
   # Intel Hardware Acceleration
   - intel-media-driver
@@ -13,6 +13,6 @@ packages:
   - rtw88-dkms-git
 
 conflicts:
-  - tlp # Explicitly conflicting since you requested no TLP
+  - tlp
   
-post_install_hook: scripts/setup-intel-undervolt.sh
+post_install_hook: scripts/setup-laptop-hardware.sh
