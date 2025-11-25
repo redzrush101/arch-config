@@ -59,32 +59,4 @@ background-color=#1e1e2ef0
 text-color=#f38ba8
 default-timeout=0
 
-# =============================================================================
-# App-Specific Styles
-# =============================================================================
 
-[app-name=Spotify]
-border-color=#a6e3a1
-default-timeout=3000
-
-[app-name=Discord]
-border-color=#89b4fa
-
-[app-name=Firefox]
-border-color=#fab387
-
-[app-name=Google Chrome]
-border-color=#f9e2af
-
-[app-name=notify-send]
-# System notifications (volume, brightness)
-border-color=#cba6f7
-
-[summary~="Volume.*"]
-border-color=#cba6f7
-
-[summary~="Brightness.*"]
-border-color=#f9e2af
-
-[category=email]
-border-color=#89dceb
