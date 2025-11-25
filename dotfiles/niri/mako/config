@@ -16,7 +16,7 @@ border-radius=12
 padding=16
 margin=12
 width=380
-max-height=200
+height=200
 
 # --- Position ---
 anchor=top-right
