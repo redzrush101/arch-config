@@ -1,50 +1,91 @@
 #!/bin/bash
+# =============================================================================
+# Virtualization Setup (KVM/QEMU/Libvirt)
+# Configures user permissions, libvirt, and IOMMU for GPU passthrough
+# =============================================================================
 
-# 1. Detect the real user (since dcli runs as root)
-if [ -n "$SUDO_USER" ]; then
-    REAL_USER="$SUDO_USER"
-else
-    REAL_USER="$(whoami)"
-fi
+set -euo pipefail
 
-echo "--> Configuring Virtualization for user: $REAL_USER"
+# Source common library
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib/common.sh"
 
-# 2. Add User to Groups
-# libvirt: manage VMs, kvm: hardware access, input: mouse/kb passthrough
-echo "    Adding $REAL_USER to libvirt, kvm, and input groups..."
-usermod -aG libvirt,kvm,input "$REAL_USER"
+# -----------------------------------------------------------------------------
+# Configuration
+# -----------------------------------------------------------------------------
+readonly VIRT_GROUPS=("libvirt" "kvm" "input")
+readonly LIBVIRT_CONF="/etc/libvirt/libvirtd.conf"
+readonly QEMU_BRIDGE_HELPER="/usr/lib/qemu/qemu-bridge-helper"
+readonly IOMMU_PARAMS="amd_iommu=on iommu=pt video=efifb:off"
 
-# 3. Configure libvirtd.conf (Allow group access)
-LIBVIRT_CONF="/etc/libvirt/libvirtd.conf"
-if [ -f "$LIBVIRT_CONF" ]; then
-    echo "    Configuring $LIBVIRT_CONF..."
-    # Uncomment unix_sock_group = "libvirt"
-    sed -i 's/^#unix_sock_group = "libvirt"/unix_sock_group = "libvirt"/' "$LIBVIRT_CONF"
-    # Uncomment unix_sock_rw_perms = "0770"
-    sed -i 's/^#unix_sock_rw_perms = "0770"/unix_sock_rw_perms = "0770"/' "$LIBVIRT_CONF"
-fi
-
-# 4. Configure QEMU (Optional: specific NVRAM/OVMF paths usually auto-detected)
-# We ensure the default bridge helper has correct permissions
-if [ -f "/usr/lib/qemu/qemu-bridge-helper" ]; then
-    chmod u+s /usr/lib/qemu/qemu-bridge-helper
-fi
-
-# 5. GRUB Configuration (AMD IOMMU)
-GRUB_FILE="/etc/default/grub"
-if grep -q "amd_iommu=on" "$GRUB_FILE"; then
-    echo "    [SKIP] IOMMU already enabled in GRUB."
-else
-    echo "    Enabling AMD IOMMU in GRUB..."
-    # Append amd_iommu=on and iommu=pt to the default cmdline
-    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="amd_iommu=on iommu=pt video=efifb:off
- /' "$GRUB_FILE"
+# -----------------------------------------------------------------------------
+# Functions
+# -----------------------------------------------------------------------------
+setup_user_groups() {
+    local user="$1"
     
-    echo "    Re-generating GRUB config..."
-    grub-mkconfig -o /boot/grub/grub.cfg
-fi
+    log_info "Adding $user to virtualization groups..."
+    
+    for group in "${VIRT_GROUPS[@]}"; do
+        if getent group "$group" > /dev/null 2>&1; then
+            usermod -aG "$group" "$user"
+            log_ok "Added to $group"
+        else
+            log_warn "Group $group does not exist (install libvirt first?)"
+        fi
+    done
+}
 
-# 6. Enable Services
-echo "    Enabling libvirtd systemd services..."
-systemctl enable --now libvirtd.service
-systemctl enable --now virtlogd.service
+configure_libvirtd() {
+    [[ ! -f "$LIBVIRT_CONF" ]] && { log_skip "libvirtd.conf not found"; return; }
+    
+    log_info "Configuring libvirtd..."
+    
+    # Uncomment socket group and permissions
+    sed -i 's/^#unix_sock_group = "libvirt"/unix_sock_group = "libvirt"/' "$LIBVIRT_CONF"
+    sed -i 's/^#unix_sock_rw_perms = "0770"/unix_sock_rw_perms = "0770"/' "$LIBVIRT_CONF"
+    
+    log_ok "libvirtd.conf configured"
+}
+
+configure_qemu_bridge() {
+    [[ ! -f "$QEMU_BRIDGE_HELPER" ]] && { log_skip "qemu-bridge-helper not found"; return; }
+    
+    chmod u+s "$QEMU_BRIDGE_HELPER"
+    log_ok "Set SUID on qemu-bridge-helper"
+}
+
+configure_iommu() {
+    log_info "Checking IOMMU configuration..."
+    add_grub_params "$IOMMU_PARAMS" || true
+}
+
+enable_services() {
+    log_info "Enabling libvirt services..."
+    
+    systemd_enable_service "libvirtd.service" --now
+    systemd_enable_service "virtlogd.service" --now
+}
+
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
+main() {
+    require_root
+    
+    local user
+    user=$(get_real_user)
+    
+    log_step "Configuring Virtualization for user: $user"
+    
+    setup_user_groups "$user"
+    configure_libvirtd
+    configure_qemu_bridge
+    configure_iommu
+    enable_services
+    
+    log_ok "Virtualization setup complete"
+    log_warn "You may need to log out and back in for group changes to take effect"
+}
+
+main "$@"

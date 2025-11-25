@@ -5,28 +5,21 @@
     "spacing": 0,
     "reload_style_on_change": true,
 
-    // LEFT: Workspaces
     "modules-left": ["niri/workspaces"],
-    
-    // CENTER: Window Title
     "modules-center": ["niri/window"],
-    
-    // RIGHT: System Status
     "modules-right": [
         "network",
         "cpu",
         "memory",
         "pulseaudio",
         "battery",
-	"niri/language",
+        "niri/language",
         "clock",
         "tray"
     ],
 
-    // --- NIRI MODULES ---
-
     "niri/workspaces": {
-        "format": "{value}", 
+        "format": "{value}",
         "current-only": false
     },
 
@@ -35,7 +28,8 @@
         "separate-outputs": true,
         "rewrite": {
             "(.*) - Mozilla Firefox": "$1",
-            "(.*) - Visual Studio Code": "VSCode"
+            "(.*) - Visual Studio Code": "VSCode",
+            "(.*) - Google Chrome": "$1"
         }
     },
 
@@ -43,8 +37,6 @@
         "format": "KB: {short}",
         "format-en": "US"
     },
-
-    // --- SYSTEM STATUS MODULES (No Emojis) ---
 
     "network": {
         "format-wifi": "WIFI: {essid} ({signalStrength}%)",

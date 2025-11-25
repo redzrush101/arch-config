@@ -1,10 +1,10 @@
-theme = "onedark" # or "catppuccin_mocha", "dracula", etc.
+theme = "onedark"
 
 [editor]
 line-number = "relative"
 cursorline = true
 color-modes = true
-bufferline = "multiple" # Show tabs only if multiple buffers are open
+bufferline = "multiple"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -12,14 +12,13 @@ normal = "block"
 select = "underline"
 
 [editor.statusline]
-# Custom status line useful for C dev
 left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
 right = ["diagnostics", "selections", "position", "file-encoding", "file-type"]
 separator = "│"
 
 [editor.lsp]
 display-messages = true
-display-inlay-hints = true # Great for seeing types in C macros/auto
+display-inlay-hints = true
 
 [editor.file-picker]
 hidden = false

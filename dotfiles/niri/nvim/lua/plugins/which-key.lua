@@ -3,19 +3,19 @@ return {
   event = "VeryLazy",
   init = function()
     vim.o.timeout = true
-    vim.o.timeoutlen = 500 -- Time in ms to wait before the menu shows up (0.5 seconds)
+    vim.o.timeoutlen = 300
   end,
-  opts = {
-    -- You can customize the look here, but defaults are great
-  },
+  opts = {},
   config = function(_, opts)
     local wk = require("which-key")
     wk.setup(opts)
 
-    -- Add labels to your specific key groups so they look nice in the menu
     wk.add({
-      { "<leader>c", group = "Compile/Code" }, -- Labels <space>c as "Compile/Code"
-      { "<leader>r", group = "Rename" },       -- Labels <space>r as "Rename"
+      { "<leader>c", group = "Compile/Code" },
+      { "<leader>r", group = "Rename" },
+      { "<leader>f", group = "Format" },
+      { "<leader>d", group = "Diagnostics" },
+      { "<leader>e", group = "Explorer" },
     })
   end,
 }

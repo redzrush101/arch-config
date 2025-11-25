@@ -1,13 +1,25 @@
 description: Development tools and CLI utilities
 packages:
+  # Version control
   - git
   - github-cli
+  - lazygit
+
+  # Network utilities
   - curl
+  - wget
+  - openbsd-netcat
+  - inetutils
+
+  # File utilities
   - unzip
-  - xclip
-  - wl-clipboard
+  - tree
   - ncdu
 
+  # Clipboard (Wayland)
+  - wl-clipboard
+
+  # Build essentials
   - base-devel
   - clang
   - cmake
@@ -16,27 +28,44 @@ packages:
   - bear
   - ccache
   - mold
+
+  # Zig
   - zig-master-bin
   - zls-master-bin
 
+  # Debugging & Profiling
+  - valgrind
+  - strace
+
+  # Shell/Script tools
+  - shellcheck
+
+  # Benchmarking
+  - hyperfine
+
+  # YAML processing
   - go-yq
 
+  # Web/Scripting runtimes
   - nodejs
   - npm
   - python
   - python-pip
 
+  # Search utilities
   - fzf
   - ripgrep
   - fd
 
-  - tree
-  - wget
+  # System monitoring
   - htop
   - fastfetch
-  - openbsd-netcat
-  - inetutils
-  - lazygit
+
+  # Lua formatting (for Neovim config)
   - stylua
 
+  # AI coding assistant
   - opencode
+
+  # Documentation
+  - tldr

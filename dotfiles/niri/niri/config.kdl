@@ -1,13 +1,9 @@
-// This config is in the KDL format: https://kdl.dev
-// "/-" comments out the following node.
+// Niri Configuration
+// https://github.com/YaLTeR/niri/wiki/Configuration
 
 input {
-    // SINGLE INPUT BLOCK containing everything
-    
     keyboard {
         xkb {
-            // German is first (Default), US is second.
-            // Press Mod+Space to switch.
             layout "us"
         }
         track-layout "window"
@@ -30,8 +26,6 @@ output "eDP-1" {
 
 layout {
     gaps 5
-    
-    // Split screen behavior (Centers if 1 window, Split if 2+)
     center-focused-column "on-overflow"
     always-center-single-column
 
@@ -62,38 +56,35 @@ animations {
     // slowdown 3.0
 }
 
-// --- Autostart Section ---
+// --- Autostart ---
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "swaybg" "-i" "/home/yassin/Bilder/wal2.png" "-m" "fill"
-spawn-at-startup "bash" "-c" "~/.config/arch-config/scripts/set-dark-mode.sh"
+spawn-at-startup "sh" "-c" "$HOME/.config/arch-config/scripts/set-dark-mode.sh"
 
-
-// Fix for WezTerm initial size
+// --- Window Rules ---
 window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
 }
 
-// Chrome Picture-in-Picture (Floating)
 window-rule {
     match app-id=r#"^com\.google\.Chrome$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
-// Block notifications from showing in screenshares
 window-rule {
     match app-id="^mako$"
     block-out-from "screencast"
 }
 
 binds {
-    // --- 60% KEYBOARD OPTIMIZATIONS ---
-
+    // --- Help ---
     Mod+Shift+Slash { show-hotkey-overlay; }
 
+    // --- Applications ---
     Mod+Return { spawn "foot"; }
     Mod+D { spawn "fuzzel"; }
     Super+Alt+L { spawn "swaylock"; }
@@ -122,7 +113,7 @@ binds {
     Mod+G       { focus-column-first; }
     Mod+Shift+G { focus-column-last; }
 
-    // --- WORKSPACE SWITCHING (NUMBERS) ---
+    // --- Workspace Switching ---
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
@@ -133,7 +124,7 @@ binds {
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
 
-    // --- MOVE WINDOW TO WORKSPACE (NUMBERS) ---
+    // --- Move to Workspace ---
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
@@ -177,18 +168,16 @@ binds {
 
     // --- Brightness Control ---
     XF86MonBrightnessUp allow-when-locked=true { 
-        spawn "sh" "-c" "brightnessctl set +10% && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl g)\""; 
+        spawn "sh" "-c" "brightnessctl set +10% && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl -m | cut -d, -f4)\""; 
     }
     XF86MonBrightnessDown allow-when-locked=true { 
-        spawn "sh" "-c" "brightnessctl set 10%- && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl g)\""; 
+        spawn "sh" "-c" "brightnessctl set 10%- && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i display-brightness-symbolic 'Brightness' \"$(brightnessctl -m | cut -d, -f4)\""; 
     }
 
     // --- Window Sizing ---
     Mod+R { switch-preset-column-width; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
-    
-    // Center Column (Shift+C to avoid conflict with Clipboard)
     Mod+Shift+C { center-column; }
 
     Mod+Minus { set-column-width "-10%"; }
@@ -196,30 +185,27 @@ binds {
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
-    // Floating/Tabbed
+    // --- Floating/Tabbed ---
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Mod+W       { toggle-column-tabbed-display; }
 
-    // Quit/Power
+    // --- Quit/Power ---
     Mod+Shift+E { quit; }
     Mod+Shift+P { power-off-monitors; }
 
-    // Mouse Wheel Binds
+    // --- Mouse Wheel ---
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
     Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-    // Window consume/expel
+    // --- Window Consume/Expel ---
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+Comma  { consume-window-into-column; }
     Mod+Period { expel-window-from-column; }
 
-    // Open/close the Overview: a zoomed-out view of workspaces and windows.
-    // You can also move the mouse into the top-left hot corner,
-    // or do a four-finger swipe up on a touchpad.
+    // --- Overview ---
     Mod+O repeat=false { toggle-overview; }
-
 }

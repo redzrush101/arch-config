@@ -1,8 +1,7 @@
-description: Neovim specific packages
+description: Neovim and dependencies
 packages:
   - neovim
   - python-pynvim
 
 conflicts: []
-# Ensure dev module is enabled, or add dependencies manually if you disable dev
 post_install_hook: []

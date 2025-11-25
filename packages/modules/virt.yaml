@@ -10,6 +10,6 @@ packages:
   - iptables-nft
   - edk2-ovmf
   - swtpm
-  
+
 conflicts: []
 post_install_hook: scripts/setup-virt.sh

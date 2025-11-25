@@ -9,9 +9,7 @@ enabled_modules:
   - virt
   - neovim
   - files
-# Additional packages not in any module
+
 additional_packages: []
-# Automatically remove unmanaged packages during sync
 auto_prune: false
-# Flatpak installation scope: "user" (default) or "system"
 flatpak_scope: user

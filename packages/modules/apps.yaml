@@ -1,9 +1,13 @@
 description: General user applications
 packages:
+  # Media players
   - mpv
   - imv
+
+  # Document viewer
   - zathura
   - zathura-pdf-mupdf
+
   # Communication
   - flatpak:com.discordapp.Discord
   - flatpak:org.localsend.localsend_app
@@ -14,3 +18,9 @@ packages:
 
   # System Utilities
   - flatpak:com.github.tchx84.Flatseal
+
+  # Password Manager
+  - flatpak:org.keepassxc.KeePassXC
+
+  # Notes
+  - flatpak:md.obsidian.Obsidian

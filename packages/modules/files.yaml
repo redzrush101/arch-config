@@ -1,15 +1,18 @@
 description: File Management (Nautilus + Mounting Backends)
 packages:
+  # File manager
   - nautilus
-  - sushi                 # Quick preview (spacebar) for Nautilus
-  - file-roller           # Archive manager integration
+  - sushi
+  - file-roller
 
+  # Virtual filesystem backends
   - gvfs-mtp
   - gvfs-afc
   - gvfs-gphoto2
   - gvfs-smb
   - gvfs-google
 
+  # Filesystem support
   - ntfs-3g
   - dosfstools
   - exfatprogs

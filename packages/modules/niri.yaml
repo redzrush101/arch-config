@@ -1,29 +1,50 @@
 description: Niri Window Manager and GUI utilities
 packages:
+  # Window Manager
+  - niri-git
+  - xwayland-satellite
+
+  # Display Manager
+  - sddm
+
+  # Screen lock & idle
   - swaylock
   - swayidle
+
+  # Display tools
   - gammastep
-  - niri-git
-  - sddm
-  - xwayland-satellite
-  - xdg-desktop-portal-gnome
+  - wlr-randr
+  - kanshi
+  - brightnessctl
+
+  # Portals & Authentication
   - xdg-desktop-portal-gtk
   - polkit-gnome
   - gnome-keyring
+
+  # Background
   - swaybg
-  
+
+  # Bar & Notifications
   - waybar
   - mako
   - libnotify
-  
+
+  # Launcher & Terminal
   - fuzzel
   - foot
+
+  # Screenshot & Clipboard
   - grim
   - slurp
+  - swappy
   - cliphist
-  
+
+  # Qt Wayland support
   - qt5-wayland
   - qt6-wayland
+
+  # GTK theming
   - gnome-themes-extra
   - gsettings-desktop-schemas
   - glib2

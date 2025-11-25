@@ -17,3 +17,6 @@ packages:
   - efibootmgr
   - dmidecode
   - paru-bin
+  
+  # Required by scripts
+  - bc

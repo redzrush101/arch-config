@@ -7,6 +7,6 @@ packages:
   - libva-utils
   - vdpauinfo
   - dkms
-  
+
 conflicts: []
 post_install_hook: scripts/fix-gigabyte-wakeup.sh

@@ -1,34 +1,40 @@
 #!/bin/bash
+# =============================================================================
+# Gigabyte Motherboard Wakeup Fix
+# Disables GPP0 as ACPI wakeup source to prevent random wake from sleep
+# =============================================================================
 
-SERVICE_NAME="wakeup-disable-GPP0.service"
-SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
+set -euo pipefail
 
-echo "--> Applying Gigabyte Motherboard Wakeup Fix..."
+# Source common library
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib/common.sh"
 
-# 1. Create the systemd service file
-cat <<EOF > "$SERVICE_PATH"
-[Unit]
-Description=Disable GPP0 as ACPI wakeup source (Gigabyte Fix)
-After=multi-user.target
+# -----------------------------------------------------------------------------
+# Configuration
+# -----------------------------------------------------------------------------
+readonly SERVICE_NAME="wakeup-disable-GPP0"
+readonly WAKEUP_DEVICE="GPP0"
 
-[Service]
-Type=oneshot
-# Check if GPP0 is enabled before toggling it, to prevent accidentally enabling it
-ExecStart=/bin/bash -c "grep -q 'GPP0.*enabled' /proc/acpi/wakeup && echo GPP0 > /proc/acpi/wakeup || true"
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
+main() {
+    require_root
+    log_step "Applying Gigabyte Motherboard Wakeup Fix..."
+    
+    # Create the systemd service
+    local exec_cmd='/bin/bash -c "grep -q '\''GPP0.*enabled'\'' /proc/acpi/wakeup && echo GPP0 > /proc/acpi/wakeup || true"'
+    
+    create_oneshot_service \
+        "$SERVICE_NAME" \
+        "Disable ${WAKEUP_DEVICE} as ACPI wakeup source (Gigabyte Fix)" \
+        "$exec_cmd"
+    
+    # Enable the service
+    systemd_enable_service "${SERVICE_NAME}.service" --now
+    
+    log_ok "Gigabyte wakeup fix applied"
+}
 
-[Install]
-WantedBy=multi-user.target
-EOF
-
-echo "    Created $SERVICE_PATH"
-
-# 2. Reload systemd to recognize the new file
-systemctl daemon-reload
-
-# 3. Enable and Start the service immediately
-if ! systemctl is-enabled --quiet "$SERVICE_NAME"; then
-    systemctl enable --now "$SERVICE_NAME"
-    echo "    Enabled and started $SERVICE_NAME"
-else
-    echo "    $SERVICE_NAME is already enabled"
-fi
+main "$@"

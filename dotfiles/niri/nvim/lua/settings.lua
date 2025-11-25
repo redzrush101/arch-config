@@ -1,18 +1,40 @@
--- Basic editor settings
-vim.opt.number = true              -- Show line numbers
-vim.opt.relativenumber = true      -- Relative line numbers
-vim.opt.tabstop = 4                -- 4 spaces for tabs (common in C)
-vim.opt.shiftwidth = 4             -- 4 spaces for indentation
-vim.opt.expandtab = true           -- Convert tabs to spaces
-vim.opt.smartindent = true         -- Smart auto-indenting
-vim.opt.wrap = false               -- Don't wrap lines
-vim.opt.signcolumn = "yes"         -- Always show sign column
-vim.opt.termguicolors = false -- True color support
+-- Leader key (must be set before lazy.nvim loads)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- Search settings
-vim.opt.ignorecase = true          -- Ignore case in search
-vim.opt.smartcase = true           -- Unless uppercase is used
+-- Line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
 
--- Split windows
-vim.opt.splitbelow = true          -- Horizontal splits below
-vim.opt.splitright = true          -- Vertical splits to the right
+-- Tabs & Indentation
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+
+-- Display
+vim.opt.wrap = false
+vim.opt.signcolumn = "yes"
+vim.opt.termguicolors = true
+vim.opt.cursorline = true
+
+-- Search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+-- Splits
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Performance
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+
+-- Scrolling
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+
+-- Undo
+vim.opt.undofile = true
