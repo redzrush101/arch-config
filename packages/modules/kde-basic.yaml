@@ -1,0 +1,25 @@
+description: Basic KDE Plasma install with Pipewire
+packages:
+  # Base Plasma
+  - plasma-desktop
+  - sddm
+  - konsole
+  - dolphin
+  
+  # Audio / Network integrations
+  - plasma-nm
+  - plasma-pa
+  
+  # Display management
+  - kscreen
+  
+  # Pipewire (inheriting audio module logic locally or strictly defining here)
+  - pipewire
+  - wireplumber
+  - pipewire-alsa
+  - pipewire-pulse
+  - pipewire-jack
+  - libpulse
+
+conflicts: []
+post_install_hook: []

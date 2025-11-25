@@ -1,0 +1,11 @@
+description: Configuration for laptop (archlinuxL)
+packages:
+  # Inherit Neovim from desktop setup
+  - neovim
+  - python-pynvim
+
+  # Apps specific to this request
+  - flatpak:com.google.Chrome
+  - flatpak:com.discordapp.Discord
+
+exclude: []

@@ -1,0 +1,17 @@
+# Update the host to your laptop hostname when running on the laptop
+host: archlinuxL 
+
+enabled_modules:
+  # Modules for the laptop
+  - kde-basic
+  - laptop-hardware
+  
+  # Inherited modules (from your desktop setup)
+  - fonts
+  - dev
+  - neovim
+  - files
+
+additional_packages: []
+auto_prune: false
+flatpak_scope: user

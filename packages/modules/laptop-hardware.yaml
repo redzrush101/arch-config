@@ -1,0 +1,18 @@
+description: Intel Hardware Acceleration, Undervolt, and WiFi
+packages:
+  # Intel Hardware Acceleration
+  - intel-media-driver
+  - libva-intel-driver
+  - vulkan-intel
+  - libva-utils
+  
+  # Undervolting tool
+  - intel-undervolt
+  
+  # WiFi (AUR package)
+  - rtw88-dkms-git
+
+conflicts:
+  - tlp # Explicitly conflicting since you requested no TLP
+  
+post_install_hook: scripts/setup-intel-undervolt.sh
